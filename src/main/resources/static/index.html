@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>show</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<style>
+    #snum{
+        color: blue;
+        position: absolute;
+        right: 50px;
+    }
+    .list-group-item:hover{
+        background-color: #dadada;
+        cursor:pointer;
+    }
+    .btn{
+        position: absolute;
+        right: 60px;
+        display: block;
+    }
+</style>
+
+</head>
+<body>
+    <div id="app" class="container">
+        <template v-if="true">
+            <h1 class="page-header">项目列表</h1>
+            <ul class="list-group">
+                <li class="list-group-item" v-for="item in items" v-on:click="showDetails(item)">
+                    {{item.groupName}} <span id="snum">{{item.scriptNum}} 行</span>
+                </li>
+            </ul>
+        </template>
+    </div>
+    <a href="submit.html" class="btn"> <h4>上传项目</h4></a>
+
+</body>
+<script>
+
+    $(function(){
+        data =  $.ajax({url:"/showList",async:false,dataType: "json"});
+        dataJSON = JSON.parse(data.responseText);
+        // $("#myDiv").html(data.responseText);
+        var app = new Vue({
+            el:"#app",
+            data: {
+                items:dataJSON
+            },
+            methods:{
+                showDetails(message) {
+                    var link = "detail.html"+'?groupName='+message.groupName+'&scriptNum='+message.scriptNum+'&nodeNum='+message.nodoNum;
+                    window.location.href=link;
+                }
+            }
+        });
+    });
+
+</script>
+</html>

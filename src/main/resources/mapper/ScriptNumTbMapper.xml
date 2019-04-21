@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.welsione.scriptcount.dao.ScriptNumTbMapper" >
+  <resultMap id="BaseResultMap" type="cn.welsione.scriptcount.model.ScriptNumTb" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="script_num" property="scriptNum" jdbcType="INTEGER" />
+    <result column="nodo_num" property="nodoNum" jdbcType="INTEGER" />
+    <result column="file_version" property="fileVersion" jdbcType="VARCHAR" />
+    <result column="upload_user" property="uploadUser" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, group_name, file_name, script_num, nodo_num, file_version, upload_user, update_date
+  </sql>
+  <select id="queryList" resultMap="BaseResultMap">
+    SELECT DISTINCT group_name FROM script_num_tb
+  </select>
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select *
+    from script_num_tb
+    where group_name = #{group,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByGroupName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from script_num_tb
+    where group_name = #{group,jdbcType=VARCHAR} and file_name = #{fileName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from script_num_tb
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from script_num_tb
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.welsione.scriptcount.model.ScriptNumTb" >
+    insert into script_num_tb (id, group_name, file_name, 
+      script_num, nodo_num, file_version, 
+      upload_user, update_date)
+    values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{scriptNum,jdbcType=INTEGER}, #{nodoNum,jdbcType=INTEGER}, #{fileVersion,jdbcType=VARCHAR}, 
+      #{uploadUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.welsione.scriptcount.model.ScriptNumTb" >
+    insert into script_num_tb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="scriptNum != null" >
+        script_num,
+      </if>
+      <if test="nodoNum != null" >
+        nodo_num,
+      </if>
+      <if test="fileVersion != null" >
+        file_version,
+      </if>
+      <if test="uploadUser != null" >
+        upload_user,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptNum != null" >
+        #{scriptNum,jdbcType=INTEGER},
+      </if>
+      <if test="nodoNum != null" >
+        #{nodoNum,jdbcType=INTEGER},
+      </if>
+      <if test="fileVersion != null" >
+        #{fileVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadUser != null" >
+        #{uploadUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.welsione.scriptcount.model.ScriptNumTb" >
+    update script_num_tb
+    <set >
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptNum != null" >
+        script_num = #{scriptNum,jdbcType=INTEGER},
+      </if>
+      <if test="nodoNum != null" >
+        nodo_num = #{nodoNum,jdbcType=INTEGER},
+      </if>
+      <if test="fileVersion != null" >
+        file_version = #{fileVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadUser != null" >
+        upload_user = #{uploadUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.welsione.scriptcount.model.ScriptNumTb" >
+    update script_num_tb
+    set group_name = #{groupName,jdbcType=VARCHAR},
+      file_name = #{fileName,jdbcType=VARCHAR},
+      script_num = #{scriptNum,jdbcType=INTEGER},
+      nodo_num = #{nodoNum,jdbcType=INTEGER},
+      file_version = #{fileVersion,jdbcType=VARCHAR},
+      upload_user = #{uploadUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <style>
+        .container{
+            padding: 20px;
+        }
+    </style>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
+</head>
+<body>
+    <dic class="container">
+        <form  class="form" action="/upload"  enctype="multipart/form-data" method="POST">
+            <div class="form-group">
+                <label class="control-label">项目名</label>
+                <input  class="form-control" type="text" name="group"  placeholder="请输入项目名"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">上传用户</label>
+                <input   class="form-control" type="text" name="user"/>
+            </div>
+            <div class="form-group">
+                <label class="control-label">版本号</label>
+                <input  class="form-control" type="text" name="version"/>
+            </div>
+            <div class="form-group">
+                <input id="dir" type="file" name="file" webkitdirectory mozdirectory/>
+            </div>
+            <input type="submit" id="submit" class="btn">
+
+        </form>
+    </dic>
+
+</body>
+<script>
+</script>
+</html>

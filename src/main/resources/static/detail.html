@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>详情</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <style>
+        .page-header{
+            padding-left: 10px;
+        }
+    </style>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/echarts.js" charset='utf-8'></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="page-header">项目名称：{{groupName}}</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>种类</th>
+                <th>行数</th>
+            </tr>
+            <tr>
+                <td>JavaScript</td>
+                <td>{{scriptNum-noteNum}}</td>
+            </tr>
+            <tr>
+                <td>注释</td>
+                <td>{{noteNum}}</td>
+            </tr>
+            <tr>
+                <td>合计</td>
+                <td>{{scriptNum}}</td>
+            </tr>
+        </table>
+
+        <div id="main" style="height:400px;"></div>
+        <h2 style="color: #337ab7;">详情</h2>
+        <table  class="table table-bordered table-hover" id="details"  >
+            <tr>
+                <th>序号</th>
+                <th>文件路径</th>
+                <th>JavaScript数量</th>
+                <th>注释数量</th>
+                <th>合计</th>
+            </tr>
+            <tr v-for="(item,index) in items">
+                <td>{{index+1}}</td>
+                <td>{{item.fileName}}</td>
+                <td>{{item.scriptNum-item.nodoNum}}</td>
+                <td>{{item.nodoNum}}</td>
+                <td>{{item.scriptNum}}</td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+<script>
+    var snum = 0;
+    var nnum = 0;
+    $(function(){
+        data =  $.ajax({url:"/showDetails?groupName="+GetGroupName(),async:false,dataType: "json"});
+        dataJSON = JSON.parse(data.responseText);
+        var app = new Vue({
+            el:".container",
+            data: {
+                    groupName:GetGroupName(),
+                    scriptNum:scriptNum(),
+                    noteNum:noteNum(),
+                    items:dataJSON
+            }
+
+        });
+        function GetGroupName() {
+            var url = location.search; //获取url中"?"符后的字串
+            url = url.substr(url.indexOf("=")+1,url.indexOf("&scriptNum"));
+            url = url.substr(0,url.indexOf("&"));
+            console.log(url);
+            return url;
+        }
+        function scriptNum() {
+            var url = location.search; //获取url中"?"符后的字串
+            url = url.substr(url.indexOf("&scriptNum=")+11,url.lastIndexOf("="));
+            url = url.substr(0,url.indexOf("&"));
+            console.log(url);
+            return url;
+        }
+        function noteNum() {
+            var url = location.search; //获取url中"?"符后的字串
+            url = url.substr(url.lastIndexOf("m=")+2,url.length);
+            console.log(url);
+            return url;
+        }
+        nnum = noteNum();
+        snum = scriptNum()-nnum;
+
+
+    });
+
+
+
+    window.onload=function () {
+        console.log(1);
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option = option = {
+            title : {
+                text: '项目代码种类',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient : 'vertical',
+                x : 'left',
+                data:['JavaScript代码','注释']
+            },
+            toolbox: {
+                show : false,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {
+                        show: true,
+                        type: ['pie', 'funnel'],
+                        option: {
+                            funnel: {
+                                x: '25%',
+                                width: '50%',
+                                funnelAlign: 'left',
+                                max: 1548
+                            }
+                        }
+                    },
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            series : [
+                {
+                    name:'代码种类',
+                    type:'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:snum, name:'JavaScript代码'},
+                        {value:nnum, name:'注释'}
+                    ]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+</script>
+
+</html>
