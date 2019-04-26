@@ -12,8 +12,13 @@
 ## 试用程序下载地址为：
 链接：https://pan.baidu.com/s/1yz76mPOvpN2nD4RgrPA7ww 
 提取码：atb0
-## 新版（sqlite数据库版本）下载地址为：
+## 新版（sqlite数据库版本）64位下载地址为：
 链接：https://pan.baidu.com/s/1haJ8AJie4-09WbCrisEwNQ 
 提取码：8w5s 
+
+## 新版（sqlite数据库版本）32位下载地址为：
+链接：https://pan.baidu.com/s/1FoDGMFwa1vE08gj77MhF0g 
+提取码：vhtv 
+
 ### 下载完成后解压直接运行start.bat文件即可（首页地址为127.0.0.1:8002）
 ## GitHub 试用程序 在soft文件夹中
